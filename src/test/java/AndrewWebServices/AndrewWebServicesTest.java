@@ -2,7 +2,6 @@ package AndrewWebServices;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,7 +29,9 @@ public class AndrewWebServicesTest {
 
     @Test
     public void testGetRecommendation() {
-        // This is taking way too long to test
+        // Use a stub recommender for fast testing
+        recommender = new StubRecSys();
+        andrewWebService = new AndrewWebServices(database, recommender, promoService);
         assertEquals("Animal House", andrewWebService.getRecommendation("Scotty"));
     }
 
