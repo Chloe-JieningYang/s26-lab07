@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
 
 public class AndrewWebServicesTest {
     Database database;
@@ -37,13 +38,21 @@ public class AndrewWebServicesTest {
 
     @Test
     public void testSendEmail() {
-        // How should we test sendEmail() when it doesn't have a return value?
-        // Hint: is there something from Mockito that seems useful here?
+        // Use Mockito to mock PromoService
+        PromoService mockPromo = mock(PromoService.class);
+        andrewWebService = new AndrewWebServices(database, recommender, mockPromo);
+        String testEmail = "test@example.com";
+        andrewWebService.sendPromoEmail(testEmail);
+        verify(mockPromo, times(1)).mailTo(testEmail);
     }
 
     @Test
     public void testNoSendEmail() {
-        // How should we test that no email has been sent in certain situations (like right after logging in)?
-        // Hint: is there something from Mockito that seems useful here?
+        PromoService mockPromo = mock(PromoService.class);
+        andrewWebService = new AndrewWebServices(database, recommender, mockPromo);
+        // Perform an operation that should NOT trigger email sending, e.g., logIn
+        andrewWebService.logIn("Scotty", 17214);
+        // Verify that mailTo was never called
+        verify(mockPromo, never()).mailTo(anyString());
     }
 }
