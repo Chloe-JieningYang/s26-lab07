@@ -7,6 +7,13 @@ package AndrewWebServices;
  * 
  * Hint: there is one method you need to implement
  */
-public class InMemoryDatabase /* should there be something here? */ {
-    // Implement your fake database here
+public class InMemoryDatabase extends Database {
+    @Override
+    public int getPassword(String accountName) {
+        if (accountName.equals("Scotty")) {
+            return 17214;
+        } else {
+            return 0;
+        }
+    }
 }
